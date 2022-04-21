@@ -1,0 +1,33 @@
+version: '3'
+services:
+  mongodb:
+    container_name: mongodb
+    image: mongo:5
+    ports:
+      - 27017:27017
+    volumes:
+      - ./mongo:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=overledger_test
+      - MONGO_INITDB_ROOT_PASSWORD=overledger_test
+      - MONGO_INITDB_DATABASE=TEMPLATE
+    restart: always
+    networks:
+      - main
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: rabbitmq
+    ports:
+      - 5672:5672
+    volumes:
+      - ./rabbitmq/data/:/var/lib/rabbitmq/
+      - ./rabbitmq/log/:/var/log/rabbitmq
+    restart: always
+    networks:
+      - main
+
+networks:
+  main:
+    external:
+      name: main

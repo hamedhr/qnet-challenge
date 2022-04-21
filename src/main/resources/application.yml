@@ -1,3 +1,9 @@
+debug: false
+---
+spring:
+  profiles:
+    active: local
+---
 spring:
   application:
     name: spring-boot-template-service
@@ -15,10 +21,13 @@ spring:
       enabled: false
   data:
     mongodb:
-      host: localhost
-      port: 27017
-      database: TEMPLATE
-# By default, rabbitMQ uses a topic exchange. To send messages to multiple consumers, use a 'fanout' exchange.
+      host: ${MONGO_HOST:localhost}
+      port: ${MONGO_PORT:27017}
+      database: ${MONGO_DATSABASE:TEMPLATE}
+      username: ${MONGO_USERNAME:overledger_test}
+      password: ${MONGO_PASSWORD:overledger_test}
+      authentication-database: admin
+  # By default, rabbitMQ uses a topic exchange. To send messages to multiple consumers, use a 'fanout' exchange.
   rabbitmq:
     host: localhost
     port: 5672
