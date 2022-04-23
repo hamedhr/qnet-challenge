@@ -29,14 +29,32 @@
 ### Step 1: (Test out its functionality)
 
 I started simple functional tests by importing `Template Service.postman_collection.json` to postman.
-1. GET
-2. POST
+
+1. POST templates
+    1. Validation -> templateField cannot be null in TemplateService: ``` {
+       "service": "Template Service",
+       "errorCode": 42,
+       "timestamp": 1650745800161,
+       "message": "Failed processing the request: The request is missing the required 'templateField' field.",
+       "details": "uri=/templates"
+       }```
+    2. If you send request with `How are you?` value you get `Always peachy!` in return
+    3. If you send 5 duplicate values, returns 42
+    4. As commented in `postStuff` method except validation and above conditions, this method sends data to queue and
+       then saves in database.
+2. GET templates
+    1. Throws exception if the value not found otherwise you get exact same value with ID(retrieves from database).
+    2. Throws exception if there are more than that value in database(unhandled exception -> 500)
 
 ### Step 2: (Create Unit tests)
 
-Some unit tests and integration tests provided.
+Some unit tests provided.
 
-### Step 3: (Curiosity)
+### Step 3: (What the program does)
+
+Chat-bot / Gateway
+
+### Step 4: (Curiosity)
 
 1. Why I am able to post duplicate values and get `returned non unique result` Exception? (depending on business
    requirements we two options)
